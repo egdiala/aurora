@@ -1,31 +1,26 @@
 <template>
   <v-container>
     <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        />
+      <v-col cols="12" class="mt-4">
+        <v-avatar class="avatar" :size="avatarSize">
+          <img
+            src="@/assets/aurora.png"
+            alt="aurora" :contain="true"
+          >
+        </v-avatar>
       </v-col>
 
-      <v-col class="mb-4">
-        <h1 class="display-2 font-weight-bold mb-3">
-          Welcome to Vuetify
+      <v-col class="mb-4 white--text">
+        <h1 :class="`display-${disp} font-weight-bold mb-3`">
+          Chinwendu Adaugo Nnamene
         </h1>
 
-        <p class="subheading font-weight-regular">
-          For help and collaboration with other Vuetify developers,
-          <br>please join our online
-          <a
-            href="https://community.vuetifyjs.com"
-            target="_blank"
-          >Discord Community</a>
+        <p class="text-center subheading font-weight-regular">
+          Hi 👋 , I’m a Product Designer in Port Harcourt, Nigeria. I specialize in UI/UX Design.
         </p>
       </v-col>
 
-      <v-col
+      <!-- <v-col
         class="mb-5"
         cols="12"
       >
@@ -86,28 +81,25 @@
             {{ eco.text }}
           </a>
         </v-row>
-      </v-col>
+      </v-col> -->
     </v-row>
-    <v-fab-transition>
       <v-btn
-        
-        color="secondary"
-        fab
-        dark
-        bottom
-        right
-        class="v-btn--example"
-      >
-        <v-icon>{{ activeFab.icon }}</v-icon>
+        color="secondary" bottom class="mb-3"
+        fab dark
+       right fixed>
+        <sun-icon size="1.5x" class="custom-class"></sun-icon>
       </v-btn>
-    </v-fab-transition>
   </v-container>
 </template>
 
 <script>
+import { SunIcon } from 'vue-feather-icons'
+
   export default {
     name: 'HelloWorld',
-
+  components: {
+    SunIcon
+  },
     data: () => ({
       ecosystem: [
         {
@@ -159,6 +151,45 @@
           href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
         },
       ],
+      avatarSize: 300,
+      disp: 2
     }),
+    mounted() {
+      this.method1();
+    },
+    methods: {
+      method1() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+          if (isMobile) {
+            this.avatarSize = 200;
+            this.disp = 1;
+          } else {
+            this.avatarSize = 300;
+            this.disp = 2;
+          }
+      },
+    },
   }
 </script>
+
+<style scoped>
+@keyframes float {
+	0% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+	50% {
+		box-shadow: 0 25px 15px 0px rgba(0,0,0,0.2);
+		transform: translatey(-20px);
+	}
+	100% {
+		box-shadow: 0 5px 15px 0px rgba(0,0,0,0.6);
+		transform: translatey(0px);
+	}
+}
+
+.avatar {
+	transform: translatey(0px);
+	animation: float 6s ease-in-out infinite;
+}
+</style>
