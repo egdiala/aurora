@@ -88,6 +88,19 @@
         </v-row>
       </v-col>
     </v-row>
+    <v-fab-transition>
+      <v-btn
+        
+        color="secondary"
+        fab
+        dark
+        bottom
+        right
+        class="v-btn--example"
+      >
+        <v-icon>{{ activeFab.icon }}</v-icon>
+      </v-btn>
+    </v-fab-transition>
   </v-container>
 </template>
 
