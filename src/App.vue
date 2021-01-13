@@ -29,21 +29,20 @@
         <v-btn
           href="https://dribbble.com/Kami_Dara/shots"
           target="_blank"
-          text class="mr-10"
+          text class="mr-10 text--primary text-body-1"
         >
           <span>Works</span>
         </v-btn>
         <v-btn
-          href="https://github.com/vuetifyjs/vuetify/releases/latest"
           target="_blank"
-          text class="mr-10"
+          text class="mr-10 text--primary text-body-1"
         >
           <span>Resume</span>
         </v-btn>
         <v-btn
           href="mailto:adaugonnamene@gmail.com"
           target="_blank"
-          text class="mr-10"
+          text class="mr-10 text--primary text-body-1"
         >
           <span>Contact</span>
         </v-btn>
@@ -56,21 +55,23 @@
     <v-main>
       <HelloWorld/>
     </v-main>
+       <transition name="slide-fade">
+      <div id="balloon-container" style="position: fixed; z-index: 0;" v-show="showBalloons"></div>
+       </transition>
     <v-overlay :opacity="opacity" :value="overlay">
        <x-icon @click="overlay = false" size="1.5x" class="custom-class" style="position: fixed; top: 5%; right: 1.5em; z-index: 99999;"></x-icon>
        <v-row class="text-center">
          <v-col cols="12">
         <v-btn
           href="https://dribbble.com/Kami_Dara/shots"
-          target="_blank"
+          target="_blank" class="text--primary"
           text
         >
           <span>Works</span>
         </v-btn></v-col>
          <v-col cols="12">
         <v-btn
-          href="https://github.com/vuetifyjs/vuetify/releases/latest"
-          target="_blank"
+          target="_blank" class="text--primary"
           text
         >
           <span>Resume</span>
@@ -78,7 +79,7 @@
          <v-col cols="12">
         <v-btn
           href="mailto:adaugonnamene@gmail.com"
-          target="_blank"
+          target="_blank" class="text--primary"
           text
         >
           <span>Contact</span>
@@ -104,29 +105,60 @@ export default {
 
   data: () => ({
     collapseOnScroll: true,
-    isMobile: false,
     opacity: 0.9,
     overlay: false,
+    showBalloons: true
   }),
 
   computed:{
     theme(){
       return (this.$vuetify.theme.dark) ? 'dark' : 'light'
+    },
+    isMobile(){
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      return isMobile;
     }
   },
   mounted() {
-    this.method1();
+    this.$vuetify.theme.dark = true;
+    this.createBalloons(10);
+    setTimeout(() => {
+      this.showBalloons = false;
+    }, 15000);
   },
   methods: {
-    method1() {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
-        if (isMobile) {
-          this.isMobile = true;
-        } else {
-          this.isMobile = false;
+      random(num) {
+        return Math.floor(Math.random()*num)
+      },
+      getRandomStyles() {
+        var r = this.random(255);
+        var g = this.random(255);
+        var b = this.random(255);
+        var mt = this.random(200);
+        var ml = this.random(50);
+        var dur = this.random(5)+5;
+        return `
+        background-color: rgba(${r},${g},${b},0.7);
+        color: rgba(${r},${g},${b},0.7); 
+        box-shadow: inset -7px -3px 10px rgba(${r-10},${g-10},${b-10},0.7);
+        margin: ${mt}px 0 0 ${ml}px;
+        animation: float ${dur}s ease-in infinite
+        `
+      },
+      createBalloons(num) {
+        var balloonContainer = document.getElementById("balloon-container");
+        for (var i = num; i > 0; i--) {
+        var balloon = document.createElement("div");
+        balloon.className = "balloon";
+          balloon.style.cssText = this.getRandomStyles();
+        if (this.showBalloons == true) {
+          console.log(this.showBalloons);
+        balloonContainer.append(balloon);
         }
-    },
-  },
+        }
+      },
+
+  }
 };
 </script>
 
@@ -134,4 +166,64 @@ export default {
   h3 {
     color: #4B4B4B;
   }
+  #balloon-container {
+  height: 100vh;
+  padding: 1em;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  overflow: hidden;
+}
+
+.balloon {
+  height: 125px;
+  width: 105px;
+  border-radius: 75% 75% 70% 70%;
+  position: relative;
+}
+
+.balloon:before {
+  content: "";
+  height: 75px;
+  width: 1px;
+  padding: 1px;
+  background-color: #FDFD96;
+  display: block;
+  position: absolute;
+  top: 125px;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.balloon:after {
+    content: "▲";
+    text-align: center;
+    display: block;
+    position: absolute;
+    color: inherit;
+    top: 120px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+@keyframes float {
+  from {transform: translateY(100vh);
+  opacity: 1;}
+  to {transform: translateY(-300vh);
+  opacity: 0;}
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
+}
 </style>

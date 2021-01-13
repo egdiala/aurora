@@ -1,8 +1,9 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12" class="mt-4">
-        <v-avatar class="avatar" :size="avatarSize">
+
+    <v-row :class="`text-center mt-${mRow}`">
+      <v-col cols="12" :class="`mt-${mCol}`">
+        <v-avatar class="avatar mt-4" :size="avatarSize">
           <img
             src="@/assets/aurora.png"
             alt="aurora" :contain="true"
@@ -11,12 +12,12 @@
       </v-col>
 
       <v-col class="mb-4 white--text">
-        <h1 :class="`display-${disp} font-weight-bold mb-3`">
+        <h1 :class="`display-${disp} text--primary font-weight-bold mb-3`">
           Chinwendu Adaugo Nnamene
         </h1>
 
-        <p class="text-center subheading font-weight-regular">
-          Hi 👋 , I’m a Product Designer in Port Harcourt, Nigeria. I specialize in UI/UX Design.
+        <p class="text-center subheading font-weight-regular text--primary">
+          Hi 👋 , I’m a UI/UX Designer in Port Harcourt, Nigeria. I specialize in Product Design.
         </p>
       </v-col>
 
@@ -83,76 +84,36 @@
         </v-row>
       </v-col> -->
     </v-row>
-      <v-btn
+      <v-btn @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         color="secondary" bottom class="mb-3"
         fab dark
        right fixed>
-        <sun-icon size="1.5x" class="custom-class"></sun-icon>
+       <transition name="slide-fade">
+        <sun-icon v-if="$vuetify.theme.dark == false" size="1.5x" class="custom-class"></sun-icon>
+       </transition>
+       <transition name="slide-fade">
+        <moon-icon v-if="$vuetify.theme.dark == true" size="1.5x" class="custom-class"></moon-icon>
+       </transition>
       </v-btn>
   </v-container>
 </template>
 
 <script>
 import { SunIcon } from 'vue-feather-icons'
+import { MoonIcon } from 'vue-feather-icons'
 
   export default {
     name: 'HelloWorld',
   components: {
-    SunIcon
+    SunIcon,
+    MoonIcon
   },
     data: () => ({
-      ecosystem: [
-        {
-          text: 'vuetify-loader',
-          href: 'https://github.com/vuetifyjs/vuetify-loader',
-        },
-        {
-          text: 'github',
-          href: 'https://github.com/vuetifyjs/vuetify',
-        },
-        {
-          text: 'awesome-vuetify',
-          href: 'https://github.com/vuetifyjs/awesome-vuetify',
-        },
-      ],
-      importantLinks: [
-        {
-          text: 'Documentation',
-          href: 'https://vuetifyjs.com',
-        },
-        {
-          text: 'Chat',
-          href: 'https://community.vuetifyjs.com',
-        },
-        {
-          text: 'Made with Vuetify',
-          href: 'https://madewithvuejs.com/vuetify',
-        },
-        {
-          text: 'Twitter',
-          href: 'https://twitter.com/vuetifyjs',
-        },
-        {
-          text: 'Articles',
-          href: 'https://medium.com/vuetify',
-        },
-      ],
-      whatsNext: [
-        {
-          text: 'Explore components',
-          href: 'https://vuetifyjs.com/components/api-explorer',
-        },
-        {
-          text: 'Select a layout',
-          href: 'https://vuetifyjs.com/getting-started/pre-made-layouts',
-        },
-        {
-          text: 'Frequently Asked Questions',
-          href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions',
-        },
-      ],
       avatarSize: 300,
-      disp: 2
+      isDark: false,
+      disp: 2,
+      mRow: 10,
+      mCol: 4
     }),
     mounted() {
       this.method1();
@@ -163,9 +124,13 @@ import { SunIcon } from 'vue-feather-icons'
           if (isMobile) {
             this.avatarSize = 200;
             this.disp = 1;
+            this.mRow = 5;
+            this.mCol = 2;
           } else {
             this.avatarSize = 300;
             this.disp = 2;
+            this.mRow = 10;
+            this.mCol = 4;
           }
       },
     },
@@ -191,5 +156,17 @@ import { SunIcon } from 'vue-feather-icons'
 .avatar {
 	transform: translatey(0px);
 	animation: float 6s ease-in-out infinite;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease;
+}
+.slide-fade-leave-active {
+  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active below version 2.1.8 */ {
+  transform: translateX(10px);
+  opacity: 0;
 }
 </style>
