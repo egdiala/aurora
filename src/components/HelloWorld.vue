@@ -6,39 +6,22 @@
         <v-avatar class="avatar mt-4" :size="avatarSize">
           <img
             src="@/assets/aurora.png"
-            alt="aurora" :contain="true"
+            alt="wendy" :contain="true"
           >
         </v-avatar>
       </v-col>
 
-      <v-col class="mb-4 white--text">
-        <h1 :class="`display-${disp} text--primary font-weight-bold mb-3`">
+      <v-col cols="12" class="mb-4 white--text">
+        <h1 :class="`display-${disp} text--primary font-weight-bold mb-3`" data-aos="zoom-in">
           Chinwendu Adaugo Nnamene
         </h1>
 
-        <p class="text-center subheading font-weight-regular text--primary">
-          Hi 👋 , I’m a UI/UX Designer in Port Harcourt, Nigeria. I specialize in Product Design.
-        </p>
-      </v-col>
-
-      <!-- <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          What's next?
-        </h2>
-
         <v-row justify="center">
-          <a
-            v-for="(next, i) in whatsNext"
-            :key="i"
-            :href="next.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ next.text }}
-          </a>
+          <v-col cols="12" lg="8" md="12" sm="12">
+            <p class="text-center subheading font-weight-regular text--primary" data-aos="zoom-out">
+              Hello ☺️ , I’m a freelance designer focused on UI/UX Design and Prototyping. I help companies define, design, and deliver the right product for the customer. I specialize in Product Design.
+            </p>            
+          </v-col>
         </v-row>
       </v-col>
 
@@ -46,44 +29,18 @@
         class="mb-5"
         cols="12"
       >
-        <h2 class="headline font-weight-bold mb-3">
-          Important Links
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(link, i) in importantLinks"
-            :key="i"
-            :href="link.href"
-            class="subheading mx-3"
+        <v-row justify="center" data-aos="fade-right">
+          <a v-for="(link, i) in links" :key="i" :href="link.url"
+            class="headline mx-3"
             target="_blank"
           >
-            {{ link.text }}
+            <span class="iconify" :style="`color: ${link.color};`" :data-icon="`simple-icons:${link.dataIcon}`" data-inline="false"></span>
           </a>
         </v-row>
       </v-col>
 
-      <v-col
-        class="mb-5"
-        cols="12"
-      >
-        <h2 class="headline font-weight-bold mb-3">
-          Ecosystem
-        </h2>
-
-        <v-row justify="center">
-          <a
-            v-for="(eco, i) in ecosystem"
-            :key="i"
-            :href="eco.href"
-            class="subheading mx-3"
-            target="_blank"
-          >
-            {{ eco.text }}
-          </a>
-        </v-row>
-      </v-col> -->
     </v-row>
+
       <v-btn @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         color="secondary" bottom class="mb-3"
         fab dark
@@ -95,26 +52,62 @@
         <moon-icon v-if="$vuetify.theme.dark == true" size="1.5x" class="custom-class"></moon-icon>
        </transition>
       </v-btn>
+      <v-btn v-if="phone && birthDate == 18"
+        color="secondary" bottom class="mb-3"
+        fab text
+       left fixed>
+       <a href="https://1lib.eu/book/4098716/5451e0" target="_blank"><GiftBox/></a>
+      </v-btn>
   </v-container>
 </template>
 
 <script>
 import { SunIcon } from 'vue-feather-icons'
 import { MoonIcon } from 'vue-feather-icons'
+import GiftBox from '@/components/GiftBox.vue'
 
   export default {
     name: 'HelloWorld',
-  components: {
-    SunIcon,
-    MoonIcon
-  },
+    props: ['phone'],
+    components: {
+      SunIcon,
+      MoonIcon,
+      GiftBox,
+    },
     data: () => ({
       avatarSize: 300,
       isDark: false,
       disp: 2,
       mRow: 10,
-      mCol: 4
+      mCol: 4,
+      links: [
+        {
+          url: 'https://www.linkedin.com/in/wendy-nnamene-94478519a',
+          dataIcon: 'linkedin',
+          color: '#0A66C2'
+        },
+        {
+          url: 'https://hashnode.com/@Wendy-Wu',
+          dataIcon: 'hashnode',
+          color: '#2962FF'
+        },
+        {
+          url: 'https://dribbble.com/Kami_Dara/shots',
+          dataIcon: 'dribbble',
+          color: '#EA4C89'
+        },
+        {
+          url: 'https://www.behance.net/adaugonnamene',
+          dataIcon: 'behance',
+          color: '#0057FF'
+        },
+      ]
     }),
+    computed: {
+      birthDate() {
+        return new Date().getDate();
+      }
+    },
     mounted() {
       this.method1();
     },

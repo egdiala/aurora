@@ -1,4 +1,4 @@
-# aurora
+# Wendy
 
 ## Project setup
 ```

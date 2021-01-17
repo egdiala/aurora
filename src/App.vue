@@ -18,7 +18,7 @@
           width="40"
         />
 
-        <v-toolbar-title v-model="collapseOnScroll"><h3>AU</h3></v-toolbar-title>
+        <v-toolbar-title v-model="collapseOnScroll"><h3>CN</h3></v-toolbar-title>
       </div>
 
       
@@ -49,17 +49,17 @@
       </div>
     </v-app-bar>
     <v-toolbar v-else dark collapse max-width="72" color="#303030" max-height="80">
-      <menu-icon @click="overlay = !overlay" size="1.5x" class="custom-class mx-auto"></menu-icon>
+      <menu-icon @click="overlay = !overlay" size="1.5x" class="mt-5 custom-class mx-auto"></menu-icon>
     </v-toolbar>
 
     <v-main>
-      <HelloWorld/>
+        <HelloWorld :phone="isMobile"/>
     </v-main>
        <transition name="slide-fade">
-      <div id="balloon-container" style="position: fixed; z-index: 0;" v-show="showBalloons"></div>
+          <div id="balloon-container" style="position: fixed; z-index: 0;" v-show="showBalloons"></div>
        </transition>
     <v-overlay :opacity="opacity" :value="overlay">
-       <x-icon @click="overlay = false" size="1.5x" class="custom-class" style="position: fixed; top: 5%; right: 1.5em; z-index: 99999;"></x-icon>
+       <x-icon @click="overlay = false" size="1.5x" class="custom-class" style="position: fixed; top: 4%; right: 1.5em; z-index: 99999;"></x-icon>
        <v-row class="text-center">
          <v-col cols="12">
         <v-btn
@@ -121,10 +121,10 @@ export default {
   },
   mounted() {
     this.$vuetify.theme.dark = true;
-    this.createBalloons(10);
+    this.createBalloons(25);
     setTimeout(() => {
       this.showBalloons = false;
-    }, 15000);
+    }, 5000);
   },
   methods: {
       random(num) {
@@ -148,16 +148,14 @@ export default {
       createBalloons(num) {
         var balloonContainer = document.getElementById("balloon-container");
         for (var i = num; i > 0; i--) {
-        var balloon = document.createElement("div");
-        balloon.className = "balloon";
+          var balloon = document.createElement("div");
+          balloon.className = "balloon";
           balloon.style.cssText = this.getRandomStyles();
-        if (this.showBalloons == true) {
-          console.log(this.showBalloons);
-        balloonContainer.append(balloon);
-        }
+          if (this.showBalloons == true) {
+            balloonContainer.append(balloon);
+          }
         }
       },
-
   }
 };
 </script>
