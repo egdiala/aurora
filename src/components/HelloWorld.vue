@@ -68,7 +68,7 @@ import GiftBox from '@/components/GiftBox.vue'
 
   export default {
     name: 'HelloWorld',
-    props: ['phone'],
+    props: ['phone', 'birthDate'],
     components: {
       SunIcon,
       MoonIcon,
@@ -103,11 +103,6 @@ import GiftBox from '@/components/GiftBox.vue'
         },
       ]
     }),
-    computed: {
-      birthDate() {
-        return new Date().getDate();
-      }
-    },
     mounted() {
       this.method1();
     },

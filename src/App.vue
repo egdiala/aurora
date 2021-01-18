@@ -53,10 +53,10 @@
     </v-toolbar>
 
     <v-main>
-        <HelloWorld :phone="isMobile"/>
+        <HelloWorld :phone="isMobile" :birthDate="birthDate" />
     </v-main>
        <transition name="slide-fade">
-          <div id="balloon-container" style="position: fixed; z-index: 0;" v-show="showBalloons"></div>
+          <div v-if="isMobile && birthDate == 18" id="balloon-container" style="position: fixed; z-index: 0;" v-show="showBalloons"></div>
        </transition>
     <v-overlay :opacity="opacity" :value="overlay">
        <x-icon @click="overlay = false" size="1.5x" class="custom-class" style="position: fixed; top: 4%; right: 1.5em; z-index: 99999;"></x-icon>
@@ -117,6 +117,9 @@ export default {
     isMobile(){
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
       return isMobile;
+    },
+    birthDate() {
+      return new Date().getDate();
     }
   },
   mounted() {
