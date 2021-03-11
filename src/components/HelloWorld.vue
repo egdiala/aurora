@@ -11,7 +11,7 @@
         </v-avatar>
       </v-col>
 
-      <v-col cols="12" class="mb-4 white--text">
+      <v-col cols="12" class="mb-1 white--text">
         <h1 :class="`display-${disp} text--primary font-weight-bold mb-3`" data-aos="zoom-in">
           Chinwendu Adaugo Nnamene
         </h1>
